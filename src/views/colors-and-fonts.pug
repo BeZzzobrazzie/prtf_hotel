@@ -1,0 +1,65 @@
+extends ./layout
+
+block append variables
+  -
+    title = "Colors and fonts";
+
+    let palette = {
+      "Dark Shade 100%": {
+        color: "1F2041FF",
+        hex: "#1F2041",
+      },
+      "Dark Shade 75%": {
+        color: "1F2041BF",
+        hex: "#1F2041",
+      },
+      "Dark Shade 50%": {
+        color: "1F204180",
+        hex: "#1F2041",
+      },
+      "Dark Shade 25%": {
+        color: "1F204140",
+        hex: "#1F2041",
+      },
+      "Dark Shade 5%": {
+        color: "1F20410D",
+        hex: "#1F2041",
+      },
+      "Purple": {
+        color: "BC9CFF",
+        hex: "#BC9CFF",
+      },
+      "Green": {
+        color: "6FCF97",
+        hex: "#6FCF97",
+      },
+    } 
+
+block styles 
+  link(href=require('../styles/p-colors-and-fonts.scss') rel='stylesheet')
+
+
+block content
+  .colors-and-fonts
+    .container
+      .colors-and-fonts__wrap
+
+        .colors-and-fonts__palette
+          .palette
+            each val, key in palette 
+              +color-card(val.color, key, val.hex)
+
+        .colors-and-fonts__font-set
+          .font-set
+            +__icon("H1", 24)
+            h1.h1 This one is the sub-section or widget title
+
+            +__icon("H2", 19)
+            h2.h2 Next one is the item title inside widgets
+
+            +__icon("H3", 12)
+            h3.h3 This is a label or CTA text
+
+            +__icon("Body", 14)
+            p.body-text This is the body text which is used for most of the design, like paragraphs, lists, etc.
+

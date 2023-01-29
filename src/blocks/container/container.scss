@@ -1,0 +1,20 @@
+.container
+{
+  //max-width: 1302px;
+  //max-width: 1920px;
+  //max-width: 1192px;
+  min-width: 320px;
+  margin-left: auto;
+  margin-right: auto;
+  
+  padding-left: 16px;
+  padding-right: 16px;
+
+
+  @media (min-width: 1920px) {
+    max-width: 1920px;
+  }
+  @media (max-width: 1920px) {
+    max-width: 1192px;
+  }
+}

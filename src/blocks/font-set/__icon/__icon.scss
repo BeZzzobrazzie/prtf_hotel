@@ -1,0 +1,11 @@
+&__icon {
+  font-family: 'Montserrat-Regular';
+  color: #1F204140;
+
+  @import '_size/size_12';
+  @import '_size/size_14';
+  @import '_size/size_19';
+  @import '_size/size_24';
+
+  justify-self: end;
+}

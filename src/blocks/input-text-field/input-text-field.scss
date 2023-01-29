@@ -1,0 +1,27 @@
+.input-text-field {
+
+  max-width: 320px;
+  width: 100%;
+
+
+  border-radius: 4px;
+  border: 1px solid #1F204140;
+  padding: 0 15px;
+
+  font-family: 'Montserrat-Regular';
+  color: #1F204140;
+  line-height: 3;
+
+    &:hover {
+      color: #1F2041BF;
+      border: 1px solid #1F204180;
+    }
+
+    &:focus {
+      color: #1F2041BF;
+      border: 1px solid #1F204180;
+      outline: 0;
+    }
+
+  @import '_status_hover-focus/_status_hover-focus';
+}

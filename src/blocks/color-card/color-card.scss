@@ -1,0 +1,10 @@
+.color-card {
+  display: flex;
+  
+  @import '__color/__color';
+  @import '__title/__title';
+  @import '__name/__name';
+  @import '__hex/__hex';
+}
+  
+  

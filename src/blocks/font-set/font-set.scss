@@ -1,0 +1,16 @@
+.font-set {
+  @import '__icon/__icon';
+
+  // max-w: 435px;
+  // возможно не стоит прописывать размеры в блоке, м.б. это лучше сделать в элементе
+  max-width: 435px;
+  min-width: 320px;
+
+  display: grid;
+  grid-template-columns: 40px auto;
+  gap: 51px 20px;
+
+}
+
+
+

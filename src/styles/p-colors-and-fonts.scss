@@ -1,0 +1,17 @@
+@use 'normolize.css';
+@use 'fonts';
+
+@import '../blocks/default-settings/default-settings';
+
+@import '../blocks/colors-and-fonts/colors-and-fonts';
+@import '../blocks/container/container';
+
+@import '../blocks/palette/palette';
+@import '../blocks/color-card/color-card';
+@import '../blocks/h2/h2';
+
+@import '../blocks/font-set/font-set';
+@import '../blocks/h1/h1';
+
+@import '../blocks/h3/h3';
+@import '../blocks/body-text/body-text';

@@ -1,0 +1,5 @@
+.colors-and-fonts {
+  @import '__wrap/colors-and-fonts__wrap';
+  @import '__palette/colors-and-fonts__palette';
+  @import '__font-set/colors-and-fonts__font-set';
+}

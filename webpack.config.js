@@ -5,8 +5,8 @@ module.exports = {
   mode: 'development',
   entry: {
     index: './src/views/index.pug',      // output index.html
-    //"colors-and-fonts": "./src/views/colors-and-fonts.pug",
-    //"fields-and-buttons": "./src/views/fields-and-buttons.pug",
+    "colors-and-fonts": "./src/views/colors-and-fonts.pug",
+    "fields-and-buttons": "./src/views/fields-and-buttons.pug",
     //"test": "./src/views/test.pug",
   },
   stats: {

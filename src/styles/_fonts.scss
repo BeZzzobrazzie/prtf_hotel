@@ -1,0 +1,34 @@
+@font-face {
+  font-family: 'Montserrat-Bold';
+  src: url('../fonts/Montserrat-Bold.eot');
+  src: local('☺'), 
+    url('../fonts/Montserrat-Bold.woff') format('woff'), 
+    url('../fonts/Montserrat-Bold.ttf') format('truetype'), 
+    url('../fonts/Montserrat-Bold.svg') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Montserrat-Regular';
+  src: url('../fonts/Montserrat-Regular.eot');
+  src: local('☺'), 
+    url('../fonts/Montserrat-Regular.woff') format('woff'), 
+    url('../fonts/Montserrat-Regular.ttf') format('truetype'), 
+    url('../fonts/Montserrat-Regular.svg') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  //src: url('../fonts/font/MaterialIcons-Regular.eot'); /* For IE6-8 */
+  src: local('Material Icons'),
+    local('MaterialIcons-Regular'),
+    //url('../fonts/font/MaterialIcons-Regular.woff2') format('woff2'),
+    //url('../fonts/font/MaterialIcons-Regular.woff') format('woff'),
+    url('../fonts/font/MaterialIcons-Regular.ttf') format('truetype');
+}
+

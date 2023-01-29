@@ -1,0 +1,10 @@
+.text-field {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  max-width: 320px;
+  width: 100%;
+  @import '__masked-text/__masked-text';
+  @import '__input-text-field/text-field__input-text-field';
+}
