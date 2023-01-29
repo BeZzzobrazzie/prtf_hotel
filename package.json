@@ -1,0 +1,31 @@
+{
+  "name": "prtf_hotel",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "scripts": {
+    "build": "webpack",
+    "watch": "webpack --watch",
+    "start": "webpack serve --open"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BeZzzobrazzie/prtf_hotel.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BeZzzobrazzie/prtf_hotel/issues"
+  },
+  "homepage": "https://github.com/BeZzzobrazzie/prtf_hotel#readme",
+  "devDependencies": {
+    "css-loader": "^6.7.3",
+    "pug-plugin": "^4.9.2",
+    "sass": "^1.57.1",
+    "sass-loader": "^13.2.0",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1",
+    "webpack-dev-server": "^4.11.1"
+  }
+}
