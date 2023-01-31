@@ -31,6 +31,13 @@ block content
                   input.input-text-field.input-text-field_status_hover-focus(type="text" value="This is pretty awesome")
 
 
+            .fields-and-buttons__text-field
+              +text-field({label: "text field", sublabel: "Default", inputValue: "Email", theme: "default"})
+              
+            .fields-and-buttons__text-field
+              +text-field({label: "text field", sublabel: "Hover / Focus", inputValue: "This is pretty awesome", theme: "hover/focus"})
+
+
           .fields-and-buttons__column
             p b
           .fields-and-buttons__column
