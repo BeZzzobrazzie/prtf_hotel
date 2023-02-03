@@ -1,0 +1,14 @@
+mixin text-field({label, sublabel, inputValue, theme})
+  .text-field
+    if label != none
+      .text-field__h3
+        label.h3= label
+
+    if sublabel != none
+      .text-field__sublabel
+        p.sublabel= sublabel
+
+    if theme == "hover/focus"
+      input.text-field__input(type="text" value= inputValue class=["text-field__input_status_hover-focus"])
+    else if theme == none || theme == "default"
+      input.text-field__input(type="text" value= inputValue)
