@@ -1,0 +1,12 @@
+.masked-text-field {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  max-width: 320px;
+  width: 100%;
+  @import '__masked-text/__masked-text';
+  @import '__h3/masked-text-field__h3';
+  @import '__sublabel/masked-text-field__sublabel';
+  @import '__input/masked-text-field__input';
+}

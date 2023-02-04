@@ -22,6 +22,10 @@ block content
             .fields-and-buttons__text-field
               +text-field({label: "text field", sublabel: "Hover / Focus", inputValue: "This is pretty awesome", theme: "hover/focus"})
 
+            .fields-and-buttons__masked-text-field
+              +masked-text-field({label: "text field", sublabel: "Default", inputValue: "ДД.ММ.ГГГГ", theme: "default"})
+               
+            input(type='number')
 
           .fields-and-buttons__column
             p b
