@@ -28,111 +28,78 @@ class MaskedTextField {
         break;
       case 'input':
 
-        let regexp1 = /[0-3]/;
-        let regexp2 = /0[1-9]|[12]\d|3[01]/;
-        let regexp4 = /(0[1-9]|[12]\d|3[01])\.[01]/;
-        let regexp5 = /(0[1-9]|[12]\d|3[01])\.(0[1-9])|(1[012])/; 
-        let regexp10 = /(0[1-9]|[12]\d|3[01])\.(0[1-9])|(1[012])\.(\d\d\d[1-9])|(\d\d[1-9]\d)|(\d[1-9]\d\d)|([1-9]\d\d\d)/; // нужно сделать проверку на 0000 и 0001. !!Сейчас неверно
-
-        let formatDate = event.target.value.replace(/\./g, '');
-        console.log('formatDate:' + formatDate);
-        console.log('this.previous.length:' + this.previous.length);
-        console.log('event.target.value.length:' + event.target.value.length);
-        if(this.previous.length < event.target.value.length) { // увеличение
-          if(event.target.value.length > 10) {
+        if(this.previous.length <= event.target.value.length) { // увеличение
+        
+          let validChar = /[^\d-\/\.]/;
+          if(validChar.test(event.target.value)) {  // проверка на недопустимые символы
             event.target.value = this.previous;
+            this.errAlert();
+            break;
           }
-          else {
-            switch(event.target.value.length) {
-              case '0':
-                break;
-              case 1:
-                if(!regexp1.test(event.target.value)) {
-                  event.target.value = this.previous;
-                }
-                break;
-              case 2:
-                if(!regexp2.test(event.target.value)) {
-                  event.target.value = this.previous;
-                }
-                else {
-                  event.target.value += '.';
-                }
-                break;
-              case 4:
-                if(!regexp4.test(event.target.value)) {
-                  event.target.value = this.previous;
-                }
-                break;
-              case 5:
-                if(!regexp5.test(event.target.value)) {
-                  event.target.value = this.previous;
-                }
-                else {
-                  event.target.value += '.';
-                }
-                break;
-              case 10:
-                if(!regexp10.test(event.target.value)) {
-                  event.target.value = this.previous;
-                }
-                break;
-            }
-          }
+  
+          let lengthNewStr = event.target.value.length - this.previous.length;
+          let newStr = event.target.value.substr(this.previous.length, lengthNewStr);
+          console.log('Пользователь ввёл: ' + newStr);
           
+          if(event.target.value.length > 10) {    // проверка на максимальное количество символов (скорее всего избыточно)
+            event.target.value = this.previous;
+            this.errAlert();
+            break;
+          }
 
-          // if(event.target.value.length == 2 || event.target.value.length == 5) {
-          //   event.target.value += '.';
-          // }
+          if(Array.from(event.target.value.matchAll(/\.|\/|-/g)).length > 2) {  // проверка на количество разделителей
+            event.target.value = this.previous;
+            this.errAlert();
+            break;
+          }
+
+          if(Array.from(event.target.value.matchAll(/\d/g)).length > 8) {       // проверка на количество символов
+            event.target.value = this.previous;
+            this.errAlert();
+            break;
+          }
+
+          console.log(event.target.value.split(/\.|\/|-/));
+
+          let splitDate = event.target.value.split(/\.|\/|-/);
+          let day = splitDate[0];
+          let month = splitDate[1];
+          let year = splitDate[2];
+
+          if(day.length > 2) {    
+            event.target.value = this.previous;
+            this.errAlert();
+            break;
+          }
+
+          if(month.length > 2) {    
+            event.target.value = this.previous;
+            this.errAlert();
+            break;
+          }
+
+          if(year.length > 4) {    
+            event.target.value = this.previous;
+            this.errAlert();
+            break;
+          }
+
         }
         else if(this.previous.length > event.target.value.length) { // уменьшение
-          if(event.target.value.length == 2) {
-            event.target.value = event.target.value.slice(0, 1);
-          }
-          else if(event.target.value.length == 5) {
-            event.target.value = event.target.value.slice(0, 4);
-          }
+
         }
-
-        //console.log(event.target.value.length);
-        // switch(formatDate.length) {
-        //   case '0':
-        //     break;
-        //   case 1:
-        //     if(!regexp1.test(formatDate)) {
-        //       event.target.value = this.previous;
-        //     }
-        //     break;
-        //   case 2:
-        //     if(!regexp2.test(formatDate)) {
-        //       event.target.value = this.previous;
-        //     }
-        //     else {
-        //       event.target.value += '.';
-        //     }
-        //     break;
-        // }
-
-        //console.log(this.previous);
-        // for(let i of event.target.value) {
-        //   //console.log(i);
-        //   if(!i.match(/\d/)) {
-        //     console.log('error');
-        //     event.target.value = this.previous;
-        //   }
-        // }
-
-        // if(regexp.test(event.target.value)) {
-        //   console.log('ok');
-        // }
-        // else {
-        //   console.log('not ok');
-        // }
-
 
         this.previous = event.target.value;
         break;
     }
+  }
+
+  errAlert() {
+    let elem = this.domElement.querySelector('.masked-text-field__input');
+    elem.style.borderColor = 'red';
+    setTimeout(() => {
+      elem.style.borderColor = '';
+    }, 1000);
   }
   
 }
