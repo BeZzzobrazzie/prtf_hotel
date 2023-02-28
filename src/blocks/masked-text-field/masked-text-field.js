@@ -11,6 +11,7 @@ class MaskedTextField {
       year: '',
       dotFirst: false,
       dotSecond: false,
+      dotPressed: false,
       formatted: true,
     }
   }
@@ -39,8 +40,12 @@ class MaskedTextField {
 
         
         if(!this.checkInput(event)) {
+          this.dateObj.dotPressed = false;
           break;
         }
+
+
+
 
         let splitDate = event.target.value.split(/\.|\/|-/);
 
@@ -48,8 +53,13 @@ class MaskedTextField {
         this.dateObj.month = splitDate[1];
         this.dateObj.year = splitDate[2];
 
-        if (Array.from(event.target.value.matchAll(/\.|\/|-/g)).length == 1) {
+        if (Array.from(event.target.value.matchAll(/\.|\/|-/g)).length == 0) {
+          this.dateObj.dotFirst = false;
+          this.dateObj.dotSecond = false;
+        }
+        else if (Array.from(event.target.value.matchAll(/\.|\/|-/g)).length == 1) {
           this.dateObj.dotFirst = true;
+          this.dateObj.dotSecond = false;
         }
         else if (Array.from(event.target.value.matchAll(/\.|\/|-/g)).length == 2) {
           this.dateObj.dotFirst = true;
@@ -61,6 +71,7 @@ class MaskedTextField {
           if (this.dateObj.day != undefined && this.dateObj.day.length > 2) {
             event.target.value = this.dateObj.previous;
             this.errAlert();
+            this.dateObj.dotPressed = false;
             break;
           }
           else {
@@ -70,6 +81,7 @@ class MaskedTextField {
           if (this.dateObj.month != undefined && this.dateObj.month.length > 2) {
             event.target.value = this.dateObj.previous;
             this.errAlert();
+            this.dateObj.dotPressed = false;
             break;
           }
           else {
@@ -79,6 +91,7 @@ class MaskedTextField {
           if (this.dateObj.year != undefined && this.dateObj.year.length > 4) {
             event.target.value = this.dateObj.previous;
             this.errAlert();
+            this.dateObj.dotPressed = false;
             break;
           }
           else {
@@ -87,26 +100,21 @@ class MaskedTextField {
 
           
           if (!this.dateObj.dotFirst && this.dateObj.day.length == 2) {
-            //event.target.value += '.';
             this.dateObj.dotFirst = true;
           }
-          if (this.dateObj.dotFirst && this.dateObj.day.length == 1) {
-            //event.target.value = '0' + event.target.value;
-            this.dateObj.day += '0';
+          if (this.dateObj.dotFirst && this.dateObj.day.length == 1 && this.dateObj.dotPressed) {
+            this.dateObj.day = '0' + this.dateObj.day;
           }
           if (this.dateObj.dotFirst && this.dateObj.month != undefined && this.dateObj.month.length == 2) {
-            //event.target.value += '.';
             this.dateObj.dotSecond = true;
           }
 
           if (this.dateObj.dotFirst && this.dateObj.dotSecond) {
-            if (this.dateObj.day.length == 1) {
-              //event.target.value = '0' + event.target.value;
-              this.dateObj.day += '0';
+            if (this.dateObj.day.length == 1 && this.dateObj.dotPressed) {
+              this.dateObj.day = '0' + this.dateObj.day;
             }
-            if (this.dateObj.month.length == 1) {
-              //event.target.value = event.target.value.slice(0, 3) + '0' + event.target.value.slice(3);
-              this.dateObj.month += '0';
+            if (this.dateObj.month.length == 1 && this.dateObj.dotPressed) {
+              this.dateObj.month = '0' + this.dateObj.month;
             }
           }
           
@@ -115,60 +123,14 @@ class MaskedTextField {
 
         }
         else if (this.dateObj.previous.length > event.target.value.length) { // уменьшение 
+
+
 
         }
 
         this.genDateOutput(event);
 
-
-
-
-
-
-        if (this.dateObj.dotFirst && this.dateObj.dotSecond) {
-
-        }
-        else if (this.dateObj.dotFirst && !this.dateObj.dotSecond) {
-
-        }
-        else if (!this.dateObj.dotFirst && !this.dateObj.dotSecond) {
-          
-        }
-
-
-
-        if (this.dateObj.previous.length <= event.target.value.length) { // увеличение
-          // if (Array.from(event.target.value.matchAll(/\.|\/|-/g)).length == 0 && this.dateObj.day.length == 2) {
-          //   event.target.value += '.';
-          // }
-          // if (Array.from(event.target.value.matchAll(/\.|\/|-/g)).length == 1 && this.dateObj.day.length == 1) {
-          //   event.target.value = '0' + event.target.value;
-          // }
-          // if (Array.from(event.target.value.matchAll(/\.|\/|-/g)).length == 1 && this.dateObj.month != undefined && this.dateObj.month.length == 2) {
-          //   event.target.value += '.';
-          // }
-          
-          // if (Array.from(event.target.value.matchAll(/\.|\/|-/g)).length == 2) {
-          //   if(this.dateObj.day.length == 1) {
-          //     event.target.value = '0' + event.target.value;
-          //   }
-          //   if(this.dateObj.month.length == 1) {
-          //     event.target.value = event.target.value.slice(0, 3) + '0' + event.target.value.slice(3);
-          //   }
-          // }
-
-
-
-
-
-        }
-        else if (this.dateObj.previous.length == event.target.value.length) { // изменение при том же количестве символов
-
-        }
-        else if (this.dateObj.previous.length > event.target.value.length) { // уменьшение 
-
-        }
-
+        this.dateObj.dotPressed = false;
         this.dateObj.previous = event.target.value;
         break;
 
@@ -183,6 +145,14 @@ class MaskedTextField {
           event.code == 'Home' || 
           event.code == 'End') {          
           this.getCursorPosition(this.domElement.querySelector('.masked-text-field__input'));
+        }
+        // if (event.code == 'ControlLeft') {
+        //   this.getCursorPosition(this.domElement.querySelector('.masked-text-field__input'));
+        // }
+        if (event.key == '.') {
+          this.dateObj.dotPressed = true;
+          console.log('dot');
+          console.log(this.dateObj.dotPressed);
         }
         break;
     }
