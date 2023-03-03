@@ -144,7 +144,7 @@ class MaskedTextField {
           event.code == 'ArrowDown ctrlKey' || 
           event.code == 'Home' || 
           event.code == 'End') {          
-          this.getCursorPosition(this.domElement.querySelector('.masked-text-field__input'));
+          //this.getCursorPosition(this.domElement.querySelector('.masked-text-field__input'));
         }
         // if (event.code == 'ControlLeft') {
         //   this.getCursorPosition(this.domElement.querySelector('.masked-text-field__input'));
@@ -209,6 +209,29 @@ class MaskedTextField {
     let dotSecond = this.dateObj.dotSecond ? '.' : '';
 
     event.target.value = day + dotFirst + month + dotSecond + year;
+    this.checkDate(event);
+  }
+
+  checkDate(event) {
+    let day = (this.dateObj.day != undefined) ? this.dateObj.day : '';
+    let month = (this.dateObj.month != undefined) ? this.dateObj.month : '';
+    let year = (this.dateObj.year != undefined) ? this.dateObj.year : '';
+    let dotFirst = this.dateObj.dotFirst ? '-' : '';
+    let dotSecond = this.dateObj.dotSecond ? '-' : '';
+
+
+
+    event.target.value;
+    let ms = Date.parse(year + dotSecond + month + dotFirst + day);
+    if (ms == NaN) {
+      console.log('error date');
+      console.log(ms);
+    }
+    else {
+      console.log('cool date');
+      console.log(ms == NaN);
+      console.log(new Date(ms));
+    }
   }
 
 }
