@@ -30,110 +30,18 @@ class MaskedTextField {
           event.target.value = '';
         }
         break;
+        
       case 'focusout':
         if (event.target.value == '') {
           event.target.value = event.target.getAttribute('value');
         }
         this.checkDate(event);
         break;
+
       case 'input':
-
-        
-        if(!this.checkInput(event)) {
-          this.dateObj.dotPressed = false;
-          break;
-        }
-
-
-
-
-        let splitDate = event.target.value.split(/\.|\/|-/);
-
-        this.dateObj.day = splitDate[0];
-        this.dateObj.month = splitDate[1];
-        this.dateObj.year = splitDate[2];
-
-        if (Array.from(event.target.value.matchAll(/\.|\/|-/g)).length == 0) {
-          this.dateObj.dotFirst = false;
-          this.dateObj.dotSecond = false;
-        }
-        else if (Array.from(event.target.value.matchAll(/\.|\/|-/g)).length == 1) {
-          this.dateObj.dotFirst = true;
-          this.dateObj.dotSecond = false;
-        }
-        else if (Array.from(event.target.value.matchAll(/\.|\/|-/g)).length == 2) {
-          this.dateObj.dotFirst = true;
-          this.dateObj.dotSecond = true;
-        }
-
-        if (this.dateObj.previous.length <= event.target.value.length) { // увеличение
-
-          if (this.dateObj.day != undefined && this.dateObj.day.length > 2) {
-            event.target.value = this.dateObj.previous;
-            this.errAlert();
-            this.dateObj.dotPressed = false;
-            break;
-          }
-          else {
-            this.dateObj.formatted = true;
-          }
-  
-          if (this.dateObj.month != undefined && this.dateObj.month.length > 2) {
-            event.target.value = this.dateObj.previous;
-            this.errAlert();
-            this.dateObj.dotPressed = false;
-            break;
-          }
-          else {
-            this.dateObj.formatted = true;
-          }
-  
-          if (this.dateObj.year != undefined && this.dateObj.year.length > 4) {
-            event.target.value = this.dateObj.previous;
-            this.errAlert();
-            this.dateObj.dotPressed = false;
-            break;
-          }
-          else {
-            this.dateObj.formatted = true;
-          }
-
-          
-          if (!this.dateObj.dotFirst && this.dateObj.day.length == 2) {
-            this.dateObj.dotFirst = true;
-          }
-          if (this.dateObj.dotFirst && this.dateObj.day.length == 1 && this.dateObj.dotPressed) {
-            this.dateObj.day = '0' + this.dateObj.day;
-          }
-          if (this.dateObj.dotFirst && this.dateObj.month != undefined && this.dateObj.month.length == 2) {
-            this.dateObj.dotSecond = true;
-          }
-
-          if (this.dateObj.dotFirst && this.dateObj.dotSecond) {
-            if (this.dateObj.day.length == 1 && this.dateObj.dotPressed) {
-              this.dateObj.day = '0' + this.dateObj.day;
-            }
-            if (this.dateObj.month.length == 1 && this.dateObj.dotPressed) {
-              this.dateObj.month = '0' + this.dateObj.month;
-            }
-          }
-          
-        }
-        else if (this.dateObj.previous.length == event.target.value.length) { // изменение при том же количестве символов
-
-        }
-        else if (this.dateObj.previous.length > event.target.value.length) { // уменьшение 
-
-
-
-        }
-
-        this.genDateOutput(event);
-
-        this.dateObj.dotPressed = false;
-        this.dateObj.previous = event.target.value;
+        this.handleInput(event);
         break;
-
+        
       case 'keydown':
         if (
           event.code == 'ArrowLeft' || 
@@ -146,10 +54,10 @@ class MaskedTextField {
           event.code == 'End') {          
           //this.getCursorPosition(this.domElement.querySelector('.masked-text-field__input'));
         }
-        // if (event.code == 'ControlLeft') {
-        //   this.getCursorPosition(this.domElement.querySelector('.masked-text-field__input'));
-        // }
-        if (event.key == '.') {
+        if (
+          event.key == '.' ||
+          event.key == '/' ||
+          event.key == '-') {
           this.dateObj.dotPressed = true;
           console.log('dot');
           console.log(this.dateObj.dotPressed);
@@ -166,11 +74,32 @@ class MaskedTextField {
     }, 1000);
   }
 
+  handleInput(event) {
+    if(!this.checkInput(event)) {
+      this.dateObj.dotPressed = false;
+      return false;
+    }
 
-  getCursorPosition(parent) {
-    setTimeout(() => {
-      console.log(parent.selectionStart);
-    }, 1)
+    this.splitDate(event);
+    this.placementPoints(event);
+
+    if (this.dateObj.previous.length <= event.target.value.length) { // увеличение
+      if(!this.checkOctetLength(event)) {
+        return false;
+      }
+      this.autoFill();
+    }
+    else if (this.dateObj.previous.length == event.target.value.length) { // изменение при том же количестве символов
+
+    }
+    else if (this.dateObj.previous.length > event.target.value.length) { // уменьшение 
+
+    }
+
+    this.genDateOutput(event);
+
+    this.dateObj.dotPressed = false;
+    this.dateObj.previous = event.target.value;
   }
 
   checkInput(event) {
@@ -200,6 +129,84 @@ class MaskedTextField {
     }
     return true;
   }
+
+  splitDate(event) {
+    let splitDate = event.target.value.split(/\.|\/|-/);
+
+    this.dateObj.day = splitDate[0];
+    this.dateObj.month = splitDate[1];
+    this.dateObj.year = splitDate[2];
+  }
+
+  placementPoints(event) {
+    if (Array.from(event.target.value.matchAll(/\.|\/|-/g)).length == 0) {
+      this.dateObj.dotFirst = false;
+      this.dateObj.dotSecond = false;
+    }
+    else if (Array.from(event.target.value.matchAll(/\.|\/|-/g)).length == 1) {
+      this.dateObj.dotFirst = true;
+      this.dateObj.dotSecond = false;
+    }
+    else if (Array.from(event.target.value.matchAll(/\.|\/|-/g)).length == 2) {
+      this.dateObj.dotFirst = true;
+      this.dateObj.dotSecond = true;
+    }
+  }
+
+  checkOctetLength(event) {
+    if (this.dateObj.day != undefined && this.dateObj.day.length > 2) {
+      event.target.value = this.dateObj.previous;
+      this.errAlert();
+      this.dateObj.dotPressed = false;
+      return false;
+    }
+    else {
+      this.dateObj.formatted = true;
+    }
+
+    if (this.dateObj.month != undefined && this.dateObj.month.length > 2) {
+      event.target.value = this.dateObj.previous;
+      this.errAlert();
+      this.dateObj.dotPressed = false;
+      return false;
+    }
+    else {
+      this.dateObj.formatted = true;
+    }
+
+    if (this.dateObj.year != undefined && this.dateObj.year.length > 4) {
+      event.target.value = this.dateObj.previous;
+      this.errAlert();
+      this.dateObj.dotPressed = false;
+      return false;
+    }
+    else {
+      this.dateObj.formatted = true;
+    }
+
+    return true;
+  }
+
+  autoFill() {
+    if (!this.dateObj.dotFirst && this.dateObj.day.length == 2) {
+      this.dateObj.dotFirst = true;
+    }
+    if (this.dateObj.dotFirst && this.dateObj.day.length == 1 && this.dateObj.dotPressed) {
+      this.dateObj.day = '0' + this.dateObj.day;
+    }
+    if (this.dateObj.dotFirst && this.dateObj.month != undefined && this.dateObj.month.length == 2) {
+      this.dateObj.dotSecond = true;
+    }
+
+    if (this.dateObj.dotFirst && this.dateObj.dotSecond) {
+      if (this.dateObj.day.length == 1 && this.dateObj.dotPressed) {
+        this.dateObj.day = '0' + this.dateObj.day;
+      }
+      if (this.dateObj.month.length == 1 && this.dateObj.dotPressed) {
+        this.dateObj.month = '0' + this.dateObj.month;
+      }
+    }
+  }
   
   genDateOutput(event) {
     let day = (this.dateObj.day != undefined) ? this.dateObj.day : '';
@@ -221,9 +228,6 @@ class MaskedTextField {
     let dotFirst = this.dateObj.dotFirst ? '-' : '';
     let dotSecond = this.dateObj.dotSecond ? '-' : '';
 
-
-
-    event.target.value;
     let ms = Date.parse(year + dotSecond + month + dotFirst + day);
     let output = new Date(ms);
     if (output == 'Invalid Date') {
@@ -234,7 +238,12 @@ class MaskedTextField {
       console.log('ok');
       console.log(output);
     }
-    
+  }
+
+  getCursorPosition(parent) {
+    setTimeout(() => {
+      console.log(parent.selectionStart);
+    }, 1)
   }
 
 }
