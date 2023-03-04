@@ -1,11 +1,10 @@
 class MaskedTextField {
   constructor(domElement) {
     this.domElement = domElement;
-    this.initEventListener(this.domElement);
-    this.reg = /^(?:(?:31(\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\.)(?:0?[1,3-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$/;
+    this.domElementInput = domElement.querySelector('.masked-text-field__input');
+    this.initEventListener();
     this.dateObj = {
       previous: '',
-      current: '',
       day: '',
       month: '',
       year: '',
@@ -16,11 +15,11 @@ class MaskedTextField {
     }
   }
 
-  initEventListener(domElement) {
-    domElement.addEventListener('focusin', this);
-    domElement.addEventListener('focusout', this);
-    domElement.addEventListener('input', this);
-    domElement.addEventListener('keydown', this);
+  initEventListener() {
+    this.domElementInput.addEventListener('focusin', this);
+    this.domElementInput.addEventListener('focusout', this);
+    this.domElementInput.addEventListener('input', this);
+    this.domElementInput.addEventListener('keydown', this);
   }
 
 
@@ -35,6 +34,7 @@ class MaskedTextField {
         if (event.target.value == '') {
           event.target.value = event.target.getAttribute('value');
         }
+        this.checkDate(event);
         break;
       case 'input':
 
@@ -209,7 +209,9 @@ class MaskedTextField {
     let dotSecond = this.dateObj.dotSecond ? '.' : '';
 
     event.target.value = day + dotFirst + month + dotSecond + year;
-    this.checkDate(event);
+    if (event.target.value.length == 10) {
+      this.checkDate(event);
+    }
   }
 
   checkDate(event) {
@@ -223,15 +225,16 @@ class MaskedTextField {
 
     event.target.value;
     let ms = Date.parse(year + dotSecond + month + dotFirst + day);
-    if (ms == NaN) {
-      console.log('error date');
-      console.log(ms);
+    let output = new Date(ms);
+    if (output == 'Invalid Date') {
+      console.log('error');
+      console.log(output);
     }
     else {
-      console.log('cool date');
-      console.log(ms == NaN);
-      console.log(new Date(ms));
+      console.log('ok');
+      console.log(output);
     }
+    
   }
 
 }
