@@ -1,0 +1,15 @@
+mixin checkbox-list({label, listItems})
+  .checkbox-list
+    if label != none
+      .checkbox-list__h3
+        label.h3= label
+
+    .checkbox-list__items
+      each val, key in listItems
+        label.checkbox-list__item
+          if val.mode == 'checked'
+            input.checkbox-list__checkbox(type='checkbox' checked)
+          else
+            input.checkbox-list__checkbox(type='checkbox')
+          |  
+          = val.text

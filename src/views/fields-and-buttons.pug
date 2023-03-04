@@ -25,11 +25,14 @@ block content
             .fields-and-buttons__masked-text-field
               +masked-text-field({label: "text field", sublabel: "Default", inputValue: "ДД.ММ.ГГГГ", theme: "default"})
                
-            input(type='date')
-            input.hi
 
           .fields-and-buttons__column
-            p b
+            .fields-and-buttons__checkbox-list
+              +checkbox-list({label: "checkbox buttons", listItems: {1: {text: "one", mode: "checked"},
+                                                                     2: {text: "two"},
+                                                                     3: {text: "three", mode: "checked"}}})
+
+
           .fields-and-buttons__column
             p c
         .fields-and-buttons__row
