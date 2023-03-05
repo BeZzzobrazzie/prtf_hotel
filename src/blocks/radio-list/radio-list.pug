@@ -1,0 +1,15 @@
+mixin radio-list({label, name, listItems})
+  .radio-list
+    if label != none
+      .radio-list__h3
+        label.h3= label
+
+    .radio-list__items
+      each val, key in listItems
+        label.radio-list__item
+          if val.mode == 'checked'
+            input.radio-list__radio(type='radio' name= name value= val.value checked)
+          else
+            input.radio-list__radio(type='radio' name= name value= val.value)
+          |  
+          = val.text
