@@ -1,3 +1,36 @@
 &__checkbox {
-  
+  -webkit-appearance: none;
+	-moz-appearance: none;
+	display: inline-block;
+  width: 1.5em;
+  height: 1.5em;
+  flex-shrink: 0;
+  flex-grow: 0;
+  border: 1px solid #1F204140;
+  border-radius: 0.25em;
+  margin-right: 0.5em;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 50% 50%;
+
+  &:checked {
+    background-image: url(Images/checkbox-checked.svg);
+    border-color: #BC9CFF;
+  }
+
+  &:focus {
+
+  }
+
+  &:hover {
+
+  }
+
+  &:active {
+    background-color: #BC9CFF40;
+  }
+
+  &:disabled {
+
+  }
 }

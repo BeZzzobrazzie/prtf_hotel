@@ -1,5 +1,7 @@
 .checkbox-list {
 
+  @import '__h3/checkbox-list__h3';
   @import '__items/checkbox-list__items';
+  @import '__item/checkbox-list__item';
   @import '__checkbox/checkbox-list__checkbox';
 }
